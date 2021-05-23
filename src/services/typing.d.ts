@@ -1,13 +1,14 @@
 declare namespace API {
   interface UserInfo {
     userId?: string;
-    userName?: string;
+    username?: string;
     avatar?: string;
     isAdmin?: boolean;
-    access: {
-      isPlatformAdmin?: boolean;
-      isBarSupperAdmin?: boolean;
-      isBarViceAdmin?: boolean;
-    };
+  }
+  interface LoginRequest {
+    loginType?: 'code' | 'password';
+    password?: string;
+    code?: string;
+    phone: string;
   }
 }

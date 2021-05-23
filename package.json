@@ -20,11 +20,13 @@
     ]
   },
   "dependencies": {
+    "@ant-design/pro-form": "^1.24.2",
     "@ant-design/pro-layout": "^6.5.0",
     "@umijs/preset-react": "1.x",
     "ahooks": "^2.10.4",
     "antd": "^4.15.6",
     "lodash": "^4.17.21",
+    "query-string": "^7.0.0",
     "recoil": "^0.3.1",
     "umi": "^3.4.7"
   },

@@ -1,24 +1,15 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { history } from 'umi';
+import { getUserInfo } from '@/services/account';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export async function getInitialState() {
-  const user: API.UserInfo = await Promise.resolve({
-    userId: 'a',
-    userName: 'a',
-    avatar: 'a',
-    isAdmin: true,
-    access: {
-      isPlatformAdmin: true,
-      isBarSupperAdmin: true,
-      isBarViceAdmin: true,
-    },
-  });
+  const data = await getUserInfo();
   return {
-    currentUser: user,
+    currentUser: data.data as API.UserInfo,
   };
 }
 
@@ -32,17 +23,19 @@ export const layout = ({
   initialState: { _: any; currentUser?: API.UserInfo };
 }) => {
   return {
-    hederRender: () => <Header />,
+    // hederRender: () => <Header />,
     footerRender: () => <Footer />,
+    hederRender: undefined,
     onPageChange: () => {
-      const { currentUser } = initialState;
+      const { currentUser } = initialState ?? {};
       const { location } = history;
+      const { pathname, search } = location;
       // 如果没有登录，重定向到 login
-      if (!currentUser?.userId && location.pathname !== '/user/login') {
-        history.push('/user/login');
+      if (!currentUser?.userId && !['/login', '/register'].includes(pathname)) {
+        history.push(`/login?callback=${pathname + search}`);
       }
     },
-    menuHeaderRender: undefined,
+    menuHeaderRender: () => <Header />,
     // ...initialState?.settings,
   };
 };

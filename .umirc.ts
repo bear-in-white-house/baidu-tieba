@@ -4,7 +4,21 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  routes: [{ path: '/', component: '@/pages/index' }],
+  routes: [
+    { path: '/', component: '@/pages/Index/index' },
+    {
+      path: '/user',
+      component: '@/pages/User/index',
+    },
+    {
+      path: '/login',
+      component: '@/pages/User/Login',
+    },
+    {
+      path: '/register',
+      component: '@/pages/User/Register',
+    },
+  ],
   fastRefresh: {},
   layout: {
     // 支持任何不需要 dom 的
@@ -19,5 +33,12 @@ export default defineConfig({
     title: false,
     baseNavigator: true,
     baseSeparator: '-',
+  },
+  proxy: {
+    '/api': {
+      target: 'http://192.168.101.10:8000/',
+      changeOrigin: true,
+      pathRewrite: { '^/api': '' },
+    },
   },
 });
